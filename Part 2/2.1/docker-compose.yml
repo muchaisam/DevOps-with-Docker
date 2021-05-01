@@ -1,0 +1,9 @@
+version: '3.5'
+
+services: 
+    simple-web-service :
+        image: devopsdockeruh/simple-web-service
+        build: .
+        volumes: 
+            - ./logs.txt:/mydir/log.txt
+        container_name: simple-web-service

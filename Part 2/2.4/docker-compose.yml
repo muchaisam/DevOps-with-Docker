@@ -1,0 +1,22 @@
+version: '3.5'
+
+services: 
+    frontend:
+        image: muchaisam/docker-frontend
+        environment: 
+            PORT: 4000
+            REACT_APP_BACKEND_URL: localhost:8080
+            PROXY_API: https://localhost:8080/
+        ports: 
+            - 4000:4000
+    backend:
+        image: muchaisam/docker-backend
+        environment: 
+            PORT: 8080
+            REQUEST_ORIGIN: localhost:4000
+            PROXY_API : https://localhost/4000/
+            REDIS : redis
+        ports: 
+            - 8080:8080
+    redis :
+        image: redis

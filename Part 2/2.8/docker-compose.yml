@@ -1,0 +1,28 @@
+version: '3.5'
+
+services:
+    frontend:
+        image: muchaisam/frontend
+        environment:
+            PORT: 4000
+            REACT_APP_BACKEND_URL: localhost:8080
+            PROXY_API: http://localhost:8080/
+        ports:
+            - 4000:4000
+    backend:
+        image:  muchaisam/backend
+        environment:
+            PORT: 8080
+            REQUEST_ORIGIN: localhost:4000
+            PROXY_API: http://localhost:4000/
+        ports:
+            - 8080:8080
+    web:
+        image: nginx
+        volumes:
+            - ./templates:/etc/nginx/templates
+        ports:
+            - "8080:80"
+        environment:
+            - NGINX_HOST=8000
+            - NGINX_PORT=80

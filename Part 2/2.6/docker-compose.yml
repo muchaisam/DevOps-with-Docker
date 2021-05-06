@@ -1,0 +1,28 @@
+version: '3.5'
+
+services: 
+    postgres :
+        image: postgres
+        restart: unless-stopped
+        environment: 
+            POSTGRES_USER : User
+            POSTGRES_PASSWORD : Pwd
+
+    frontend :
+        image: muchaisam/docker-frontend
+        ports: 
+            - 5000:5000
+    
+    backend :
+        image: muchaisam/docker/backend
+        ports: 
+            - 4000:4000
+        environment: 
+            POSTGRES_USER : User
+            POSTGRES_PASSWORD : Pwd
+            POSTGRES_HOST : postgres
+        depends_on: 
+            - postgres
+
+    redis :
+        image: redis

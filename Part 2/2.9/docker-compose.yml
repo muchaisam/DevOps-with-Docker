@@ -1,0 +1,36 @@
+version: '3.5'
+
+services: 
+    frontend:
+        image: muchaisam/frontend
+        environment: 
+            PORT: 4000
+            REACT_APP_BACKEND_URL : localhost:8080
+            PROXY_API: http://localhost:8080/
+            ports: 
+                - 4000:4000
+    backend :
+        image: muchaisam/backend
+        environment: 
+            PORT: 8080
+            REQUEST_ORIGIN: localhost/4000
+            PROXY_API : http://localhost/4000
+        ports: 
+            - 8080:808
+    redis:
+        image: redis
+        restart: unless-stopped
+        volumes: 
+            - ./redis_data:/data
+        environment: 
+            - REDIS_HOST=6379
+
+    database :
+        image: postgres
+        restart: unless-stopped
+        environment: 
+            - POSTGRES_USER = postgres
+            - POSTGRES_PASSWORD = postgres
+            - POSTGRES_DATABASE = postgres
+        volumes: 
+            - ./database:/postgresql/data
